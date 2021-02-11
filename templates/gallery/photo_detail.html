@@ -1,3 +1,4 @@
+{% load static thumbnail%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,15 @@
     <title>Title</title>
 </head>
 <body>
-    <img src="{{ photo.photo.url }}"/>
+    <img src="{% thumbnail photo.photo 500x500 crop %}" alt="" />
+    <a href="{% url 'gallery:new_interaction' %}">leave a comment</a>
+    {% for comment in photo.interaction_set.all %}
+        <p>
+            {{ comment.content }}
+            {{ comment.owner }}
+            {{ comment.created_at }}
+        </p>
+    {% endfor %}
+
 </body>
 </html>

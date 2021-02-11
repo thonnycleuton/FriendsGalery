@@ -21,7 +21,8 @@ class Photo(models.Model):
         :param status:
         :return:
         """
-        return Interaction.objects.filter(photo=self.photo, content__isnull=status).all()
+        interactions = Interaction.objects.filter(photo=self.id, content__isnull=status).all()
+        return interactions
 
     def get_comments(self):
         """
@@ -51,3 +52,6 @@ class Interaction(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse('gallery:detail', kwargs={'pk': self.photo.pk})

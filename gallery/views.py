@@ -3,8 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 
-from gallery.form import PhotoForm
-from gallery.models import Photo
+from gallery.form import PhotoForm, InteractionForm
+from gallery.models import Photo, Interaction
 
 
 class GalleryList(ListView):
@@ -12,6 +12,8 @@ class GalleryList(ListView):
     Class that shows all pictures of gallery
     """
     model = Photo
+    # filtering to show only visible pictures
+    queryset = Photo.objects.filter(visible=True)
 
 
 class GalleryCreate(CreateView):
@@ -29,5 +31,15 @@ class GalleryCreate(CreateView):
 
 
 class GalleryDetail(DetailView):
-
     model = Photo
+
+
+class InteractionCreate(CreateView):
+    model = Interaction
+    form_class = InteractionForm
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        form.save()
+        return super(InteractionCreate, self).form_valid(form)
