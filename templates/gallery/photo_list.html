@@ -9,18 +9,21 @@
     {% if user.is_authenticated %}
         <a href="{% url 'gallery:new' %}" >Send us your picture</a>
     {% endif %}
-    {% for photo in photo_list %}
-        <tr>
-            <td>
-                <img src="{% thumbnail photo.photo 50x50 crop %}" alt="" />
-            </td>
-        <td>
-            <a href="{% url 'gallery:detail' photo.id %}" >{{ photo.photo.name }}</a>
-            {{ photo.get_comments.count }} comments
-            {{ photo.get_like.count }} likes
-        </td>
-        </tr>
-    {% endfor %}
-
+    <ul>
+        {% for photo in photo_list %}
+            <li>
+                <tr>
+                    <td>
+                        <img src="{% thumbnail photo.photo 50x50 crop %}" alt="" />
+                    </td>
+                    <td>
+                        <a href="{% url 'gallery:detail' photo.id %}" >{{ photo.photo.name }}</a>
+                        {{ photo.get_comments.count }} comments
+                        {{ photo.get_like.count }} likes
+                    </td>
+                </tr>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

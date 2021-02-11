@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 
 from gallery.form import PhotoForm, InteractionForm
 from gallery.models import Photo, Interaction
@@ -62,3 +63,8 @@ class GalleryDetail(DetailView):
         new_comment.save()
         self.get_context_data()
         return self.get(self, request, *args, **kwargs)
+
+
+class GalleryDelete(DeleteView):
+    model = Photo
+    success_url = reverse_lazy('gallery:list')
