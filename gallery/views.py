@@ -33,13 +33,24 @@ class GalleryCreate(CreateView):
 class GalleryDetail(DetailView):
     model = Photo
 
+    def get_context_data(self, **kwargs):
+        """
+        this method retrieves the comments related to the current photo
+        :param kwargs:
+        :return: data updated with comments
+        """
+        data = super().get_context_data(**kwargs)
+        comments = Interaction.objects.filter(photo=self.get_object()).order_by('-created_at')
+        comments = Photo.get_comments(self.get_object())
+        data['interactions'] = comments
+        if self.request.user.is_authenticated:
+            data['comment_form'] = InteractionForm(instance=self.request.user)
+        return data
 
-class InteractionCreate(CreateView):
-    model = Interaction
-    form_class = InteractionForm
-
-    def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        form.save()
-        return super(InteractionCreate, self).form_valid(form)
+    def post(self, request, *args, **kwargs):
+        new_comment = Interaction(content=request.POST.get('content'),
+                                  user=self.request.user.profile,
+                                  photo=self.get_object())
+        new_comment.save()
+        self.get_context_data()
+        return self.get(self, request, *args, **kwargs)

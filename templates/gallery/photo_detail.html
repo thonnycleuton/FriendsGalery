@@ -7,14 +7,17 @@
 </head>
 <body>
     <img src="{% thumbnail photo.photo 500x500 crop %}" alt="" />
-    <a href="{% url 'gallery:new_interaction' %}">leave a comment</a>
-    {% for comment in photo.interaction_set.all %}
+    <br>{{ photo.get_like.count }} Likes
+        {% for comment in photo.get_comments.all %}
         <p>
             {{ comment.content }}
             {{ comment.owner }}
             {{ comment.created_at }}
         </p>
     {% endfor %}
-
+    <form method="POST">
+        {% csrf_token %}
+        {{ comment_form }}
+    </form>
 </body>
 </html>

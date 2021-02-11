@@ -12,4 +12,4 @@ class PhotoForm(forms.ModelForm):
 class InteractionForm(forms.ModelForm):
     class Meta:
         model = Interaction
-        exclude = ('created_at',)
+        fields = ('content',)
