@@ -12,8 +12,9 @@ class GalleryList(ListView):
     Class that shows all pictures of gallery
     """
     model = Photo
-    # filtering to show only visible pictures
-    queryset = Photo.objects.filter(visible=True)
+
+    def get_queryset(self):
+        return Photo.objects.filter() if self.request.user.profile.allowed_to_upload else Photo.objects.filter(visible=True)
 
 
 class GalleryCreate(CreateView):
@@ -26,8 +27,15 @@ class GalleryCreate(CreateView):
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
+        f = form.save(commit=False)
+        f.owner = self.request.user.profile
         form.save()
         return super(GalleryCreate, self).form_valid(form)
+
+
+class GalleryUpdate(UpdateView):
+    model = Photo
+    fields = ('visible', )
 
 
 class GalleryDetail(DetailView):

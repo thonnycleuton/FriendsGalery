@@ -7,8 +7,11 @@
 </head>
 <body>
     <img src="{% thumbnail photo.photo 500x500 crop %}" alt="" />
+    {% if user.profile.allowed_to_upload %}
+        <a href="{% url 'gallery:update' photo.pk %}"> {{ photo.visible }}</a>
+    {% endif %}
     <br>{{ photo.get_like.count }} Likes
-        {% for comment in photo.get_comments.all %}
+    {% for comment in photo.get_comments.all %}
         <p>
             {{ comment.content }}
             {{ comment.owner }}
