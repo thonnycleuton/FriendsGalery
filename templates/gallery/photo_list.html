@@ -1,0 +1,22 @@
+{% load static thumbnail%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+</head>
+<body>
+
+    {% for photo in photo_list %}
+        <tr>
+            <td>
+                <img src="{% thumbnail photo.photo 50x50 crop %}" alt="" />
+            </td>
+        <td>
+            <a href="{% url 'gallery:detail' photo.id %}" >{{ photo.photo.name }}</a>
+        </td>
+        </tr>
+    {% endfor %}
+
+</body>
+</html>
