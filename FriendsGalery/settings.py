@@ -81,8 +81,8 @@ WSGI_APPLICATION = 'FriendsGalery.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'djongo',
+        'NAME': 'wedding',
     }
 }
 
@@ -119,7 +119,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -129,9 +128,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Auth
-LOGIN_URL = 'contas:login'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_URL = 'contas:logout'
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'gallery:list'
+LOGOUT_URL = 'accounts:logout'
 
 THUMBNAIL_ALIASES = {
     '': {

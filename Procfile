@@ -1,0 +1,1 @@
+web: gunicorn FriendsGalery.wsgi --log-file -

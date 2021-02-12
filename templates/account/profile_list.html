@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+</head>
+<body>
+    <a href="{% url 'accounts:new' %}">New</a>
+    <ul>
+        {% for profile in profile_list %}
+            <li>
+                {{ profile }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

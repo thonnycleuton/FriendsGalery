@@ -15,7 +15,8 @@ class GalleryList(ListView):
     model = Photo
 
     def get_queryset(self):
-        return Photo.objects.filter() if self.request.user.profile.allowed_to_upload else Photo.objects.filter(visible=True)
+
+        return Photo.objects.filter() if self.request.user else Photo.objects.filter(visible=True)
 
 
 class GalleryCreate(CreateView):
@@ -61,7 +62,6 @@ class GalleryDetail(DetailView):
                                   user=self.request.user.profile,
                                   photo=self.get_object())
         new_comment.save()
-        self.get_context_data()
         return self.get(self, request, *args, **kwargs)
 
 
