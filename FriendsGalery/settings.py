@@ -13,6 +13,7 @@ import os
 import django_heroku
 from pathlib import Path
 
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -81,10 +82,8 @@ WSGI_APPLICATION = 'FriendsGalery.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'wedding',
-    }
+    # 'default': {'ENGINE': 'djongo', 'NAME': 'wedding',}
+    'default': dj_database_url.config(conn_max_age=600, ssl_require=True),
 }
 
 
